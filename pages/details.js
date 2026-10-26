@@ -1,5 +1,9 @@
-const titleEl = document.querySelector("#title");
-const descriptionEl = document.querySelector("#bodyText");
+const postTitleH2El = document.querySelector("#postTitle");
+const postDescriptionPEl = document.querySelector("#postDescription");
+
+//TODO:Clear the code from here
+const titleEl = document.querySelector("#userName");
+const descriptionEl = document.querySelector("#userComment");
 const btnBackEl = document.querySelector("#backBtn");
 
 const params = new URLSearchParams(window.location.search);
@@ -7,17 +11,24 @@ const postId = params.get("id");
 
 btnBackEl.addEventListener("click", () => {
   console.log("click");
-  /* window.location.href = "../index.html"; */
-  window.history.back();
+  window.location.href = "../index.html";
+  /*   window.history.back(); */
 });
 
 async function getPostDetails() {
   try {
-    const res = await fetch(`https://dummyjson.com/comments/${postId}`);
-    const data = await res.json();
+    const [resComments, resPosts] = await Promise.all([
+      fetch(`https://dummyjson.com/comments/${postId}`),
+      fetch(`https://dummyjson.com/posts/${postId}`),
+    ]);
 
-    console.log(data);
-    renderDetailsInfo(data);
+    const [commentsData, postData] = await Promise.all([
+      resComments.json(),
+      resPosts.json(),
+    ]);
+
+    console.log(commentsData);
+    renderDetailsInfo(commentsData, postData);
   } catch (e) {
     console.error(e.message);
   } finally {
@@ -25,7 +36,8 @@ async function getPostDetails() {
   }
 }
 
-function renderDetailsInfo(comment) {
+function renderDetailsInfo(comment, post) {
+  const { title, body: bodyPost } = post;
   const { user, body } = comment;
 
   titleEl.textContent = user.fullName;

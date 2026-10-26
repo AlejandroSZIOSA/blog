@@ -1,9 +1,8 @@
-const postTitleH2El = document.querySelector("#postTitle");
+const postTitleH3El = document.querySelector("#postTitle");
 const postDescriptionPEl = document.querySelector("#postDescription");
 
-//TODO:Clear the code from here
-const titleEl = document.querySelector("#userName");
-const descriptionEl = document.querySelector("#userComment");
+const userNameH3El = document.querySelector("#userName");
+const userComentPEl = document.querySelector("#userComment");
 const btnBackEl = document.querySelector("#backBtn");
 
 const params = new URLSearchParams(window.location.search);
@@ -15,10 +14,10 @@ btnBackEl.addEventListener("click", () => {
   /*   window.history.back(); */
 });
 
-async function getPostDetails() {
+const getPostDetails = async function () {
   try {
     const [resComments, resPosts] = await Promise.all([
-      fetch(`https://dummyjson.com/comments/${postId}`),
+      fetch(`https://dummyjson.com/commnts/${postId}`),
       fetch(`https://dummyjson.com/posts/${postId}`),
     ]);
 
@@ -28,20 +27,86 @@ async function getPostDetails() {
     ]);
 
     console.log(commentsData);
-    renderDetailsInfo(commentsData, postData);
+    renderPageInfo(commentsData, postData);
   } catch (e) {
     console.error(e.message);
   } finally {
     console.log("operation fetches details completed");
   }
+};
+
+async function addComment() {
+  try {
+    const res = await fetch("https://dummyjson.com/comments/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        body: "This makes all sense to me!",
+        postId: 3,
+        userId: 5,
+      }),
+    });
+    s;
+    const data = await res.json();
+    console.log(data);
+  } catch (e) {
+    console.log(e.message);
+  } finally {
+    console.log("POST new comment success");
+  }
 }
 
-function renderDetailsInfo(comment, post) {
-  const { title, body: bodyPost } = post;
-  const { user, body } = comment;
+async function updateComment() {
+  try {
+    const res = await fetch("https://dummyjson.com/comments/1", {
+      method: "PUT", // or PATCH
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        body: "I think I should shift to the moon",
+      }),
+    });
 
-  titleEl.textContent = user.fullName;
-  descriptionEl.textContent = body;
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    console.log(data);
+  } catch (e) {
+    console.log(e.message);
+  } finally {
+    console.log("PUT comment update completed");
+  }
+}
+
+async function deleteComment() {
+  try {
+    const res = await fetch("https://dummyjson.com/comments/1", {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    console.log(data);
+  } catch (e) {
+    console.log(e.message);
+  } finally {
+    console.log("DELETE comment completed");
+  }
+}
+
+function renderPageInfo(comment, post) {
+  const { title, body: postDescription } = post;
+  const { user, body: commentContent } = comment;
+
+  postTitleH3El.textContent = title;
+  postDescriptionPEl.textContent = postDescription;
+
+  userNameH3El.textContent = user.fullName;
+  userComentPEl.textContent = commentContent;
 }
 
 getPostDetails();

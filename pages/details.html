@@ -10,17 +10,37 @@
       <button id="backBtn">Back</button>
     </header>
     <main>
-      <section>
-        <h2>Blog Details</h2>
-        <h3 id="postTitle"></h3>
-        <p id="postDescription"></p>
-      </section>
+      <div id="errorMsg"></div>
+      <div id="contentPage">
+        <section>
+          <h2>Blog Details</h2>
+          <h3 id="postTitle"></h3>
+          <p id="postDescription"></p>
+        </section>
 
-      <section>
-        <h2>Comments</h2>
-        <h3 id="userName"></h3>
-        <p id="userComment"></p>
-      </section>
+        <section>
+          <form>
+            <fieldset>
+              <legend>Add A Comment</legend>
+              <label for="newTitle" name="newTitle">Title</label>
+              <input type="text" /><br />
+              <label for="newComment" name="newComment">Comment</label>
+              <input type="text" /><br />
+              <button type="submit">Submite Comment</button>
+            </fieldset>
+          </form>
+        </section>
+
+        <section>
+          <h2>Comments</h2>
+          <div>
+            <h3 id="userName"></h3>
+            <p id="userComment"></p>
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+        </section>
+      </div>
     </main>
     <script src="details.js"></script>
   </body>

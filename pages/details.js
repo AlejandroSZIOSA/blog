@@ -1,3 +1,10 @@
+let tempComments = [];
+
+const errorMsgDivEl = document.querySelector("#errorMsg");
+const contentDivEl = document.querySelector("#content");
+
+const commentFormEl = document.querySelector("#commentForm");
+
 const postTitleH3El = document.querySelector("#postTitle");
 const postDescriptionPEl = document.querySelector("#postDescription");
 
@@ -14,10 +21,17 @@ btnBackEl.addEventListener("click", () => {
   /*   window.history.back(); */
 });
 
+commentFormEl.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(commentFormEl);
+  const data = Object.fromEntries(formData.entries());
+  addComment(data);
+});
+
 const getPostDetails = async function () {
   try {
     const [resComments, resPosts] = await Promise.all([
-      fetch(`https://dummyjson.com/commnts/${postId}`),
+      fetch(`https://dummyjson.com/comments/${postId}`),
       fetch(`https://dummyjson.com/posts/${postId}`),
     ]);
 
@@ -30,23 +44,26 @@ const getPostDetails = async function () {
     renderPageInfo(commentsData, postData);
   } catch (e) {
     console.error(e.message);
+    errorMsgDivEl.textContent = `Error: ${e.message}`;
+
+    errorMsgDivEl.classList.remove("disabled");
+    contentDivEl.classList.add("disabled");
   } finally {
     console.log("operation fetches details completed");
   }
 };
 
-async function addComment() {
+async function addComment(formData) {
   try {
     const res = await fetch("https://dummyjson.com/comments/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        body: "This makes all sense to me!",
-        postId: 3,
-        userId: 5,
+        body: formData.newComment,
+        postId: postId,
+        userId: 1, // just for testing, use a unique userId
       }),
     });
-    s;
     const data = await res.json();
     console.log(data);
   } catch (e) {

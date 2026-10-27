@@ -1,0 +1,18 @@
+#errorMsg {
+  display: block;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+#errorMsg.disabled {
+  display: none;
+}
+
+#content {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+#content.disabled {
+  display: none;
+}

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="details.css" />
     <title>Details</title>
   </head>
   <body>
@@ -11,34 +12,41 @@
     </header>
     <main>
       <div id="errorMsg"></div>
-      <div id="contentPage">
+      <div id="content">
         <section>
           <h2>Blog Details</h2>
           <h3 id="postTitle"></h3>
           <p id="postDescription"></p>
+          <div>
+            <button id="editBtn">Edit</button>
+            <button id="deleteBtn">Delete</button>
+          </div>
         </section>
 
         <section>
-          <form>
+          <form id="commentForm">
             <fieldset>
               <legend>Add A Comment</legend>
-              <label for="newTitle" name="newTitle">Title</label>
-              <input type="text" /><br />
+              <label for="newTitle" name="newTitle">Name</label>
+              <input type="text" value="Unknown" /><br />
               <label for="newComment" name="newComment">Comment</label>
-              <input type="text" /><br />
-              <button type="submit">Submite Comment</button>
+              <textarea type="text" id="newComment" name="newComment">
+              </textarea>
+              <br />
+              <button type="submit">Submit Comment</button>
             </fieldset>
           </form>
         </section>
 
         <section>
           <h2>Comments</h2>
-          <div>
-            <h3 id="userName"></h3>
-            <p id="userComment"></p>
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
+
+          <ol>
+            <li>
+              <h3 id="userName"></h3>
+              <p id="userComment"></p>
+            </li>
+          </ol>
         </section>
       </div>
     </main>

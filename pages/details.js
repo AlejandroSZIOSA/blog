@@ -1,16 +1,21 @@
+const USER_ID = 1; // just for testing, use a unique userId
 let tempComments = [];
+
+const btnBackEl = document.querySelector("#backBtn");
 
 const errorMsgDivEl = document.querySelector("#errorMsg");
 const contentDivEl = document.querySelector("#content");
 
-const commentFormEl = document.querySelector("#commentForm");
-
 const postTitleH3El = document.querySelector("#postTitle");
 const postDescriptionPEl = document.querySelector("#postDescription");
 
+const commentFormEl = document.querySelector("#commentForm");
+const commentTextareaEl = document.querySelector("#newComment");
+
+const commentListEl = document.querySelector("#commentList");
+
 const userNameH3El = document.querySelector("#userName");
 const userComentPEl = document.querySelector("#userComment");
-const btnBackEl = document.querySelector("#backBtn");
 
 const params = new URLSearchParams(window.location.search);
 const postId = params.get("id");
@@ -44,8 +49,8 @@ const getPostDetails = async function () {
     renderPageInfo(commentsData, postData);
   } catch (e) {
     console.error(e.message);
-    errorMsgDivEl.textContent = `Error: ${e.message}`;
 
+    errorMsgDivEl.textContent = `Error: ${e.message}`;
     errorMsgDivEl.classList.remove("disabled");
     contentDivEl.classList.add("disabled");
   } finally {
@@ -61,13 +66,19 @@ async function addComment(formData) {
       body: JSON.stringify({
         body: formData.newComment,
         postId: postId,
-        userId: 1, // just for testing, use a unique userId
+        userId: USER_ID, // just for testing, use a unique userId
       }),
     });
     const data = await res.json();
+
     console.log(data);
+    commentTextareaEl.value = "";
   } catch (e) {
     console.log(e.message);
+
+    errorMsgDivEl.textContent = `Error: ${e.message}`;
+    errorMsgDivEl.classList.remove("disabled");
+    contentDivEl.classList.add("disabled");
   } finally {
     console.log("POST new comment success");
   }
@@ -116,14 +127,38 @@ async function deleteComment() {
 }
 
 function renderPageInfo(comment, post) {
-  const { title, body: postDescription } = post;
+  const { title, body: postDescription, id } = post;
   const { user, body: commentContent } = comment;
 
   postTitleH3El.textContent = title;
   postDescriptionPEl.textContent = postDescription;
 
-  userNameH3El.textContent = user.fullName;
+  let userFullname = user.fullName;
+
+  userNameH3El.textContent = userFullname;
   userComentPEl.textContent = commentContent;
+
+  const newCommentData = {
+    postId: id,
+    userFullname: userFullname,
+    commentContent: commentContent,
+  };
+  addNewTempComment(newCommentData);
+}
+
+function addNewTempComment({ postId, userFullname, commentContent }) {
+  tempComments.push({
+    postIdTemp: postId,
+    userNameTemp: userFullname,
+    commentTemp: commentContent,
+  });
+  console.log(tempComments);
+}
+
+function renderTempComments() {
+  tempComments.forEach((comment) => {
+    const { postIdTemp, userFullnameTemp, commentContentTemp } = comment;
+  });
 }
 
 getPostDetails();

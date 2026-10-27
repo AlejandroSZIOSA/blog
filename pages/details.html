@@ -27,8 +27,6 @@
           <form id="commentForm">
             <fieldset>
               <legend>Add A Comment</legend>
-              <label for="newTitle" name="newTitle">Name</label>
-              <input type="text" value="Unknown" /><br />
               <label for="newComment" name="newComment">Comment</label>
               <textarea type="text" id="newComment" name="newComment">
               </textarea>
@@ -41,8 +39,8 @@
         <section>
           <h2>Comments</h2>
 
-          <ol>
-            <li>
+          <ol id="commentList">
+            <li id="commentItem">
               <h3 id="userName"></h3>
               <p id="userComment"></p>
             </li>

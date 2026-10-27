@@ -1,4 +1,4 @@
-const USER_ID = 1; // just for testing, use a unique userId
+const USER_ID = 5; // just for testing, use a unique userId
 let tempComments = [];
 
 const btnBackEl = document.querySelector("#backBtn");
@@ -13,9 +13,6 @@ const commentFormEl = document.querySelector("#commentForm");
 const commentTextareaEl = document.querySelector("#newComment");
 
 const commentListEl = document.querySelector("#commentList");
-
-const userNameH3El = document.querySelector("#userName");
-const userComentPEl = document.querySelector("#userComment");
 
 const params = new URLSearchParams(window.location.search);
 const postId = params.get("id");
@@ -73,6 +70,14 @@ async function addComment(formData) {
 
     console.log(data);
     commentTextareaEl.value = "";
+
+    addNewTempComment({
+      postIdTemp: postId,
+      userNameTemp: "Unknown",
+      commentContentTemp: formData.newComment,
+    });
+
+    renderTempComments();
   } catch (e) {
     console.log(e.message);
 
@@ -133,31 +138,37 @@ function renderPageInfo(comment, post) {
   postTitleH3El.textContent = title;
   postDescriptionPEl.textContent = postDescription;
 
-  let userFullname = user.fullName;
+  /*  userNameH3El.textContent = userFullname;
+  userComentPEl.textContent = commentContent; */
 
-  userNameH3El.textContent = userFullname;
-  userComentPEl.textContent = commentContent;
-
-  const newCommentData = {
-    postId: id,
-    userFullname: userFullname,
-    commentContent: commentContent,
+  const newTempCommentData = {
+    postIdTemp: id,
+    userNameTemp: user.username,
+    commentContentTemp: commentContent,
   };
-  addNewTempComment(newCommentData);
+  addNewTempComment(newTempCommentData);
+  renderTempComments();
 }
 
-function addNewTempComment({ postId, userFullname, commentContent }) {
+function addNewTempComment({ postIdTemp, userNameTemp, commentContentTemp }) {
   tempComments.push({
-    postIdTemp: postId,
-    userNameTemp: userFullname,
-    commentTemp: commentContent,
+    postIdTemp: postIdTemp,
+    userNameTemp: userNameTemp,
+    commentTemp: commentContentTemp,
   });
   console.log(tempComments);
 }
 
 function renderTempComments() {
+  commentListEl.innerHTML = "";
   tempComments.forEach((comment) => {
-    const { postIdTemp, userFullnameTemp, commentContentTemp } = comment;
+    const { userNameTemp, commentTemp } = comment;
+    const listItemEl = document.createElement("li");
+    listItemEl.innerHTML = `
+      <h3>${userNameTemp}</h3>
+      <p>${commentTemp}</p>
+    `;
+    commentListEl.appendChild(listItemEl);
   });
 }
 

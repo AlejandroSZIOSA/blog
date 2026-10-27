@@ -11,7 +11,7 @@
       <button id="backBtn">Back</button>
     </header>
     <main>
-      <div id="errorMsg"></div>
+      <div id="messages"></div>
       <div id="content">
         <section>
           <h2>Blog Details</h2>
@@ -21,6 +21,33 @@
             <button id="editBtn">Edit</button>
             <button id="deleteBtn">Delete</button>
           </div>
+        </section>
+
+        <section id="editPostSection">
+          <form id="editPostForm">
+            <fieldset>
+              <legend>Edit Blog</legend>
+              <label for="editedPostTitle" name="editedPostTitle">Title</label>
+              <input
+                type="text"
+                id="editedPostTitle"
+                name="editedPostTitle"
+              /><br />
+
+              <label for="editedComment" name="editedPostContent"
+                >Content</label
+              >
+              <textarea
+                type="text"
+                id="editedPostContent"
+                name="editedPostContent"
+              >
+              </textarea
+              ><br />
+              <br />
+              <button type="submit">Submit Comment</button>
+            </fieldset>
+          </form>
         </section>
 
         <section>

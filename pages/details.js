@@ -10,6 +10,9 @@ const postTitleH3El = document.querySelector("#postTitle");
 const postDescriptionPEl = document.querySelector("#postDescription");
 
 const deleteBtnEl = document.querySelector("#deleteBtn");
+const editBtnEl = document.querySelector("#editBtn");
+
+const editPostSectionEl = document.querySelector("#editPostSection");
 
 const commentFormEl = document.querySelector("#commentForm");
 const commentTextareaEl = document.querySelector("#newComment");
@@ -30,6 +33,11 @@ commentFormEl.addEventListener("submit", (e) => {
   const formData = new FormData(commentFormEl);
   const data = Object.fromEntries(formData.entries());
   addComment(data);
+});
+
+editBtnEl.addEventListener("click", () => {
+  editPostSectionEl.classList.toggle("enabled");
+  console.log(editPostSectionEl);
 });
 
 deleteBtnEl.addEventListener("click", () => {

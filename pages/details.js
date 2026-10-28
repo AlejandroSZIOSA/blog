@@ -1,4 +1,6 @@
 const USER_ID = 5;
+
+let tempPost = null;
 let tempComments = [];
 
 const btnBackEl = document.querySelector("#backBtn");
@@ -9,10 +11,16 @@ const contentDivEl = document.querySelector("#content");
 const postTitleH3El = document.querySelector("#postTitle");
 const postDescriptionPEl = document.querySelector("#postDescription");
 
-const deleteBtnEl = document.querySelector("#deleteBtn");
 const editBtnEl = document.querySelector("#editBtn");
-
 const editPostSectionEl = document.querySelector("#editPostSection");
+const editPostFormEl = document.querySelector("#editPostForm");
+const editPostTitleInputEl = document.querySelector("#editPostTitleInput");
+const editPostContentTextAreaEl = document.querySelector(
+  "#editPostContentTextArea",
+);
+const saveChangesBtnEl = document.querySelector("#saveChangesBtn");
+
+const deleteBtnEl = document.querySelector("#deleteBtn");
 
 const commentFormEl = document.querySelector("#commentForm");
 const commentTextareaEl = document.querySelector("#newComment");
@@ -37,7 +45,18 @@ commentFormEl.addEventListener("submit", (e) => {
 
 editBtnEl.addEventListener("click", () => {
   editPostSectionEl.classList.toggle("enabled");
-  console.log(editPostSectionEl);
+  /* console.log(editPostSectionEl); */
+  editPostTitleInputEl.value = tempPost.title;
+  editPostContentTextAreaEl.value = tempPost.body;
+});
+
+saveChangesBtnEl.addEventListener("click", (e) => {
+  e.preventDefault();
+  const formData = new FormData(editPostFormEl);
+  const editedPostData = Object.fromEntries(formData.entries());
+  console.log(editedPostData);
+  updatePost(editedPostData);
+  editPostSectionEl.classList.toggle("enabled");
 });
 
 deleteBtnEl.addEventListener("click", () => {
@@ -56,12 +75,18 @@ const getPostDetails = async function () {
       resPosts.json(),
     ]);
 
-    console.log(commentsData);
-    renderPageInfo(commentsData, postData);
+    //TODO:Do the same in the other fetches, and check if the response is ok, if not throw an error with the status code and status text.
+    if (resComments.ok || resPosts.ok) {
+      console.log("Fetches Post Details and Comments success");
+    }
+
+    tempPost = postData;
+
+    renderInitialPageInfo(commentsData, tempPost);
   } catch (e) {
     console.error(e.message);
 
-    renderMessages(`Error: ${e.message}`);
+    renderUserMessages(`Error: ${e.message}`);
   } finally {
     console.log("operation fetches details completed");
   }
@@ -85,7 +110,7 @@ async function addComment(formData) {
 
     addNewTempComment({
       postIdTemp: postId,
-      userNameTemp: "Unknown",
+      userNameTemp: "Anonymous",
       commentContentTemp: formData.newComment,
     });
 
@@ -93,7 +118,7 @@ async function addComment(formData) {
   } catch (e) {
     console.log(e.message);
 
-    renderMessages(`Error: ${e.message}`);
+    renderUserMessages(`Error: ${e.message}`);
   } finally {
     console.log("POST new comment success");
   }
@@ -107,18 +132,18 @@ async function updatePost(editedPostData) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        title: "I think I should shift to the moon",
-      }),
+      body: JSON.stringify(editedPostData),
     });
 
-    if (!res.ok) {
+    /* if (res.ok) {
       throw new Error(`HTTP error: ${res.status}`);
-    }
+    } */
 
-    const data = await res.json();
+    const newData = await res.json();
+    tempPost = newData;
+    renderEditedPost(tempPost);
 
-    console.log(data);
+    console.log(newData);
   } catch (error) {
     console.error("Error updating post:", error.message);
   }
@@ -131,7 +156,7 @@ async function deletePost() {
     });
 
     const data = await res.json();
-    renderMessages("Post deleted successfully");
+    renderUserMessages("Post deleted successfully");
     console.log(data);
   } catch (e) {
     console.log(e.message);
@@ -140,7 +165,8 @@ async function deletePost() {
   }
 }
 
-function renderPageInfo(comment, post) {
+//TODO: create separate functions for post and comments
+function renderInitialPageInfo(comment, post) {
   const { title, body: postDescription, id } = post;
   const { user, body: commentContent } = comment;
 
@@ -154,6 +180,11 @@ function renderPageInfo(comment, post) {
   };
   addNewTempComment(newTempCommentData);
   renderTempComments();
+}
+
+function renderEditedPost(newPost) {
+  postTitleH3El.textContent = newPost.title;
+  postDescriptionPEl.textContent = newPost.body;
 }
 
 function addNewTempComment({ postIdTemp, userNameTemp, commentContentTemp }) {
@@ -178,7 +209,7 @@ function renderTempComments() {
   });
 }
 
-function renderMessages(message) {
+function renderUserMessages(message) {
   messageDivEl.innerHTML = `<p>${message}</p>
   <button id="continueBtn">Continue</button>
   `;

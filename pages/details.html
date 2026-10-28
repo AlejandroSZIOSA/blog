@@ -27,25 +27,15 @@
           <form id="editPostForm">
             <fieldset>
               <legend>Edit Blog</legend>
-              <label for="editedPostTitle" name="editedPostTitle">Title</label>
-              <input
-                type="text"
-                id="editedPostTitle"
-                name="editedPostTitle"
-              /><br />
+              <label>Title</label>
+              <input type="text" id="editPostTitleInput" name="title" /><br />
 
-              <label for="editedComment" name="editedPostContent"
-                >Content</label
-              >
-              <textarea
-                type="text"
-                id="editedPostContent"
-                name="editedPostContent"
-              >
+              <label>Content</label>
+              <textarea type="text" id="editPostContentTextArea" name="body">
               </textarea
               ><br />
               <br />
-              <button type="submit">Submit Comment</button>
+              <button id="saveChangesBtn" type="submit">Save Changes</button>
             </fieldset>
           </form>
         </section>
@@ -58,7 +48,7 @@
               <textarea type="text" id="newComment" name="newComment">
               </textarea>
               <br />
-              <button type="submit">Submit Comment</button>
+              <button type="submit">Add</button>
             </fieldset>
           </form>
         </section>

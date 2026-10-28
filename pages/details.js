@@ -1,4 +1,4 @@
-const USER_ID = 5;
+const USER_ID = 5; //Default ID from origin API Documentation
 
 let tempPost = null;
 let tempComments = [];
@@ -6,6 +6,10 @@ let tempComments = [];
 const btnBackEl = document.querySelector("#backBtn");
 
 const messageDivEl = document.querySelector("#messages");
+const innerEditPostErrorMsgEl = document.querySelector(
+  "#innerEditPostErrorMsg",
+);
+
 const contentDivEl = document.querySelector("#content");
 
 const postTitleH3El = document.querySelector("#postTitle");
@@ -18,12 +22,16 @@ const editPostTitleInputEl = document.querySelector("#editPostTitleInput");
 const editPostContentTextAreaEl = document.querySelector(
   "#editPostContentTextArea",
 );
+
 const saveChangesBtnEl = document.querySelector("#saveChangesBtn");
 
 const deleteBtnEl = document.querySelector("#deleteBtn");
 
 const commentFormEl = document.querySelector("#commentForm");
 const commentTextareaEl = document.querySelector("#newComment");
+const innerAddCommentErrorMsgEl = document.querySelector(
+  "#innerAddCommentErrorMsg",
+);
 
 const commentListEl = document.querySelector("#commentList");
 
@@ -31,9 +39,7 @@ const params = new URLSearchParams(window.location.search);
 const postId = params.get("id");
 
 btnBackEl.addEventListener("click", () => {
-  /*   console.log("click");
-   */ window.location.href = "../index.html";
-  /*   window.history.back(); */
+  window.location.href = "../index.html";
 });
 
 commentFormEl.addEventListener("submit", (e) => {
@@ -45,7 +51,6 @@ commentFormEl.addEventListener("submit", (e) => {
 
 editBtnEl.addEventListener("click", () => {
   editPostSectionEl.classList.toggle("enabled");
-  /* console.log(editPostSectionEl); */
   editPostTitleInputEl.value = tempPost.title;
   editPostContentTextAreaEl.value = tempPost.body;
 });
@@ -54,16 +59,16 @@ saveChangesBtnEl.addEventListener("click", (e) => {
   e.preventDefault();
   const formData = new FormData(editPostFormEl);
   const editedPostData = Object.fromEntries(formData.entries());
-  console.log(editedPostData);
+  /* console.log(editedPostData); */
   updatePost(editedPostData);
-  editPostSectionEl.classList.toggle("enabled");
+  /* editPostSectionEl.classList.toggle("enabled"); */
 });
 
 deleteBtnEl.addEventListener("click", () => {
   deletePost();
 });
 
-const getPostDetails = async function () {
+const getInitialPostDetails = async function () {
   try {
     const [resComments, resPosts] = await Promise.all([
       fetch(`https://dummyjson.com/comments/${postId}`),
@@ -75,77 +80,39 @@ const getPostDetails = async function () {
       resPosts.json(),
     ]);
 
-    //TODO:Do the same in the other fetches, and check if the response is ok, if not throw an error with the status code and status text.
-    if (resComments.ok || resPosts.ok) {
+    if (resComments.ok && resPosts.ok) {
       console.log("Fetches Post Details and Comments success");
     }
 
-    tempPost = postData;
+    tempPost = postData; //Temporal copy of the post before be edited
 
     renderInitialPageInfo(commentsData, tempPost);
   } catch (e) {
-    console.error(e.message);
-
-    renderUserMessages(`Error: ${e.message}`);
-  } finally {
-    console.log("operation fetches details completed");
+    renderOuterPageUserMsg(`Error: ${e.message}`);
   }
 };
 
-async function addComment(formData) {
-  try {
-    const res = await fetch("https://dummyjson.com/comments/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        body: formData.newComment,
-        postId: postId,
-        userId: USER_ID, // just for testing, use a unique userId
-      }),
-    });
-    const data = await res.json();
-
-    console.log(data);
-    commentTextareaEl.value = "";
-
-    addNewTempComment({
-      postIdTemp: postId,
-      userNameTemp: "Anonymous",
-      commentContentTemp: formData.newComment,
-    });
-
-    renderTempComments();
-  } catch (e) {
-    console.log(e.message);
-
-    renderUserMessages(`Error: ${e.message}`);
-  } finally {
-    console.log("POST new comment success");
-  }
-}
-// TODO: add a function to edit the post, and call it when the user clicks on the edit button. The function should send a PUT request to the API with the new post data.
-
 async function updatePost(editedPostData) {
+  innerEditPostErrorMsgEl.textContent = "";
   try {
     const res = await fetch("https://dummyjson.com/posts/" + postId, {
-      method: "PUT", // or PATCH
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(editedPostData),
     });
 
-    /* if (res.ok) {
-      throw new Error(`HTTP error: ${res.status}`);
-    } */
+    if (res.ok) {
+      console.log("Updated Post Success");
+      editPostSectionEl.classList.toggle("enabled"); //Hide edit container only if everything is okay
+    }
 
     const newData = await res.json();
     tempPost = newData;
     renderEditedPost(tempPost);
-
-    console.log(newData);
-  } catch (error) {
-    console.error("Error updating post:", error.message);
+  } catch (e) {
+    innerEditPostErrorMsgEl.textContent = e.message;
   }
 }
 
@@ -155,17 +122,46 @@ async function deletePost() {
       method: "DELETE",
     });
 
-    const data = await res.json();
-    renderUserMessages("Post deleted successfully");
-    console.log(data);
+    if (res.ok) {
+      console.log("Deleted Post Success");
+    }
+
+    renderOuterPageUserMsg("Deleted Post Success");
   } catch (e) {
-    console.log(e.message);
-  } finally {
-    console.log("DELETE comment completed");
+    renderOuterPageUserMsg(`Error: ${e.message}`);
   }
 }
 
-//TODO: create separate functions for post and comments
+async function addComment(formData) {
+  innerAddCommentErrorMsgEl.textContent = "";
+
+  try {
+    const res = await fetch("https://dummyjson.com/comments/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        body: formData.newComment,
+        postId: postId,
+        userId: USER_ID, //ID from origin API
+      }),
+    });
+
+    if (res.ok) {
+      console.log("Comment has been created succesfull");
+    }
+
+    addNewTempComment({
+      postIdTemp: postId,
+      userNameTemp: "Anonymous",
+      commentContentTemp: formData.newComment,
+    });
+
+    renderTempComments();
+  } catch (e) {
+    innerAddCommentErrorMsgEl.textContent = e.message;
+  }
+}
+
 function renderInitialPageInfo(comment, post) {
   const { title, body: postDescription, id } = post;
   const { user, body: commentContent } = comment;
@@ -188,16 +184,18 @@ function renderEditedPost(newPost) {
 }
 
 function addNewTempComment({ postIdTemp, userNameTemp, commentContentTemp }) {
+  commentTextareaEl.value = "";
+
   tempComments.push({
     postIdTemp: postIdTemp,
     userNameTemp: userNameTemp,
     commentTemp: commentContentTemp,
   });
-  console.log(tempComments);
 }
 
 function renderTempComments() {
   commentListEl.innerHTML = "";
+
   tempComments.forEach((comment) => {
     const { userNameTemp, commentTemp } = comment;
     const listItemEl = document.createElement("li");
@@ -209,7 +207,7 @@ function renderTempComments() {
   });
 }
 
-function renderUserMessages(message) {
+function renderOuterPageUserMsg(message) {
   messageDivEl.innerHTML = `<p>${message}</p>
   <button id="continueBtn">Continue</button>
   `;
@@ -222,4 +220,8 @@ function renderUserMessages(message) {
   });
 }
 
-getPostDetails();
+function renderInnerPageUserMsg(msg) {
+  innerPageErrorMsgDivEl.innerHTML = `<p>${msg}</p>`;
+}
+
+getInitialPostDetails();

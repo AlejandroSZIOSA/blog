@@ -29,12 +29,15 @@
               <legend>Edit Blog</legend>
               <label>Title</label>
               <input type="text" id="editPostTitleInput" name="title" /><br />
-
               <label>Content</label>
               <textarea type="text" id="editPostContentTextArea" name="body">
               </textarea
               ><br />
               <br />
+              <div
+                id="innerEditPostErrorMsg"
+                class="innerPageErrorMsgDiv"
+              ></div>
               <button id="saveChangesBtn" type="submit">Save Changes</button>
             </fieldset>
           </form>
@@ -44,10 +47,13 @@
           <form id="commentForm">
             <fieldset>
               <legend>Add A Comment</legend>
-              <label for="newComment" name="newComment">Comment</label>
               <textarea type="text" id="newComment" name="newComment">
               </textarea>
               <br />
+              <div
+                id="innerAddCommentErrorMsg"
+                class="innerPageErrorMsgDiv"
+              ></div>
               <button type="submit">Add</button>
             </fieldset>
           </form>
@@ -55,13 +61,7 @@
 
         <section>
           <h2>Comments</h2>
-
-          <ol id="commentList">
-            <!--  <li id="commentItem">
-              <h3 id="userName"></h3>
-              <p id="userComment"></p>
-            </li> -->
-          </ol>
+          <ol id="commentList"></ol>
         </section>
       </div>
     </main>

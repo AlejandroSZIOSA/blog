@@ -51,6 +51,7 @@ commentFormEl.addEventListener("submit", (e) => {
 
 editBtnEl.addEventListener("click", () => {
   editPostSectionEl.classList.toggle("enabled");
+
   editPostTitleInputEl.value = tempPost.title;
   editPostContentTextAreaEl.value = tempPost.body;
 });

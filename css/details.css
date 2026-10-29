@@ -17,7 +17,7 @@
   display: none;
 }
 
-#editPostSection {
+#editPostSection.disabled {
   display: none;
   background-color: #e0f7fa;
   padding: 20px;
@@ -28,6 +28,6 @@
   display: block;
 }
 
-#editPostSection.disabled {
+/* #editPostSection.disabled {
   display: none;
-}
+} */

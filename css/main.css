@@ -1,6 +1,7 @@
 #message {
   display: none;
   background-color: black;
+  color: white;
 }
 
 #message.enabled {
@@ -8,9 +9,19 @@
 }
 
 #content {
-  background-color: rgb(230, 210, 0);
+  display: flex;
+  flex-direction: column;
+  /* background-color: rgb(230, 210, 0); */
 }
 
 #content.disabled {
   display: none;
+}
+
+#blogList {
+  list-style: decimal;
+}
+
+#blogList li {
+  padding: 1rem 0;
 }

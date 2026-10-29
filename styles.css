@@ -1,0 +1,16 @@
+#message {
+  display: none;
+  background-color: black;
+}
+
+#message.enabled {
+  display: block;
+}
+
+#content {
+  background-color: rgb(230, 210, 0);
+}
+
+#content.disabled {
+  display: none;
+}

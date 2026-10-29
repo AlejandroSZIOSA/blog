@@ -9,9 +9,9 @@
 }
 
 #content {
+  width: 98%;
   display: flex;
   flex-direction: column;
-  /* background-color: rgb(230, 210, 0); */
 }
 
 #content.disabled {
@@ -19,9 +19,39 @@
 }
 
 #blogList {
-  list-style: decimal;
+  list-style: circle;
 }
 
 #blogList li {
-  padding: 1rem 0;
+  /* width: 95%; */
+  padding: 0.5rem 0;
+}
+
+#postTitle {
+  width: fit-content;
+  padding: 10px;
+  color: black;
+  border: 2px solid brown;
+  border-radius: 10px;
+  background-color: yellow;
+  cursor: pointer;
+}
+
+@media (min-width: 600px) {
+  /*  #content {
+    padding: 1rem;
+  } */
+
+  #blogList {
+    margin-top: 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+@media (min-width: 1024px) {
+  #blogList {
+    width: 100vw;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

@@ -4,13 +4,18 @@ const blogListEl = document.querySelector("#blogList");
 
 const renderBlogItem = function (d) {
   const blogItemEl = document.createElement("li");
-  blogItemEl.innerHTML = `<p>${d.title}</p>`;
+  /* blogItemEl.innerHTML = `<p id="postTitle">${d.title}</p>`; */
 
-  blogItemEl.addEventListener("click", () => {
-    //navigate to details page using https://dummyjson.com/posts/d.id
+  const postTitlePEl = document.createElement("p");
+
+  postTitlePEl.textContent = d.title;
+  postTitlePEl.id = "postTitle";
+
+  postTitlePEl.addEventListener("click", () => {
     window.location.href = `pages/details.html?id=${d.id}`;
   });
 
+  blogItemEl.appendChild(postTitlePEl);
   blogListEl.appendChild(blogItemEl);
 };
 

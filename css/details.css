@@ -1,6 +1,6 @@
 #messages {
   display: block;
-  background-color: #f8d7da;
+  /* background-color: #f8d7da; */
   color: #721c24;
 }
 
@@ -9,7 +9,7 @@
 }
 
 #content {
-  background-color: #f0f0f0;
+  /*  background-color: #f0f0f0; */
   padding: 20px;
 }
 
@@ -19,7 +19,7 @@
 
 #editPostSection {
   display: none;
-  background-color: #e0f7fa;
+  /* background-color: #e0f7fa; */
   padding: 20px;
   margin-top: 20px;
 }

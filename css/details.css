@@ -10,7 +10,11 @@
 
 #content {
   /*  background-color: #f0f0f0; */
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* padding: 20px; */
+  gap: 20px;
 }
 
 #content.disabled {
@@ -20,8 +24,8 @@
 #editPostSection {
   display: none;
   /* background-color: #e0f7fa; */
-  padding: 20px;
-  margin-top: 20px;
+  /* padding: 20px;
+  margin-top: 20px; */
 }
 
 #editPostSection.enabled {
@@ -31,3 +35,47 @@
 /* #editPostSection.disabled {
   display: none;
 } */
+
+#content section {
+  width: 98%;
+}
+
+.blog-info__section {
+  /*   width: 95%; */
+  border: 2px solid brown;
+  background: yellow;
+}
+
+.blog-info__section div {
+  padding: 5px;
+}
+
+#editPostForm input {
+  width: stretch;
+}
+
+#editPostForm legend {
+  font-weight: bold;
+  text-align: center;
+}
+
+#editPostForm textarea {
+  width: stretch;
+  height: 10rem;
+  resize: none;
+}
+
+.add-comment__section {
+  background: chartreuse;
+}
+
+#commentForm textarea {
+  width: stretch;
+  height: 80px;
+  resize: none;
+}
+
+#commentForm legend {
+  font-weight: bold;
+  text-align: center;
+}

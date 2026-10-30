@@ -14,37 +14,40 @@
     <main>
       <div id="messages"></div>
       <div id="content">
-        <section>
-          <h1>Blog Details</h1>
-          <h2 id="postTitle"></h2>
-          <p id="postDescription"></p>
+        <h2>Details</h2>
+
+        <section class="blog-info__section">
           <div>
-            <button id="editBtn">Edit</button>
-            <button id="deleteBtn">Delete</button>
+            <h2 id="postTitle"></h2>
+            <p id="postDescription"></p>
+            <div>
+              <button id="editBtn">Edit</button>
+              <button id="deleteBtn">Delete</button>
+            </div>
+          </div>
+
+          <div id="editPostSection">
+            <form id="editPostForm">
+              <fieldset>
+                <legend>Edit Blog</legend>
+                <label>Title</label>
+                <input type="text" id="editPostTitleInput" name="title" /><br />
+                <label>Content</label>
+                <textarea type="text" id="editPostContentTextArea" name="body">
+                </textarea
+                ><br />
+                <br />
+                <div
+                  id="innerEditPostErrorMsg"
+                  class="innerPageErrorMsgDiv"
+                ></div>
+                <button id="saveChangesBtn" type="submit">Save Changes</button>
+              </fieldset>
+            </form>
           </div>
         </section>
 
-        <section id="editPostSection">
-          <form id="editPostForm">
-            <fieldset>
-              <legend>Edit Blog</legend>
-              <label>Title</label>
-              <input type="text" id="editPostTitleInput" name="title" /><br />
-              <label>Content</label>
-              <textarea type="text" id="editPostContentTextArea" name="body">
-              </textarea
-              ><br />
-              <br />
-              <div
-                id="innerEditPostErrorMsg"
-                class="innerPageErrorMsgDiv"
-              ></div>
-              <button id="saveChangesBtn" type="submit">Save Changes</button>
-            </fieldset>
-          </form>
-        </section>
-
-        <section>
+        <section class="add-comment__section">
           <form id="commentForm">
             <fieldset>
               <legend>Add A Comment</legend>

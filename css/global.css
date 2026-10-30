@@ -21,6 +21,7 @@ header {
   background-color: #222;
   color: #fff;
   text-align: center;
+  z-index: 1000;
 }
 
 h1 {
@@ -49,10 +50,12 @@ h2 {
   }
 }
 
-/* .disabled {
-  display: none;
+.error-message__container {
+  position: fixed;
+  color: red;
+  font-size: larger;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
 }
-
-.enabled {
-  display: block;
-} */

@@ -148,7 +148,7 @@ async function addComment(formData) {
     });
 
     if (res.ok) {
-      console.log("Comment has been created succesfull");
+      console.log("Comment has been created successful");
     }
 
     addNewTempComment({

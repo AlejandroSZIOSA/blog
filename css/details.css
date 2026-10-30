@@ -23,9 +23,6 @@
 
 #editPostSection {
   display: none;
-  /* background-color: #e0f7fa; */
-  /* padding: 20px;
-  margin-top: 20px; */
 }
 
 #editPostSection.enabled {
@@ -36,9 +33,9 @@
   display: none;
 } */
 
-#content section {
-  width: 98%;
-}
+/* #content section {
+  min-width: 98%;
+} */
 
 .blog-info__section {
   /*   width: 95%; */
@@ -46,8 +43,15 @@
   background: yellow;
 }
 
-.blog-info__section div {
+.blog-info__section > div {
   padding: 5px;
+}
+
+.edit-btns__container {
+  display: flex;
+  justify-content: left;
+  padding: 5px;
+  gap: 10px;
 }
 
 #editPostForm input {
@@ -67,15 +71,27 @@
 
 .add-comment__section {
   background: chartreuse;
+  width: stretch;
 }
 
 #commentForm textarea {
   width: stretch;
-  height: 80px;
+  height: 4rem;
   resize: none;
 }
 
 #commentForm legend {
   font-weight: bold;
   text-align: center;
+}
+
+.add-btn__container {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .add-comment__section {
+    width: 50%;
+  }
 }

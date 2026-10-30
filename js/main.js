@@ -24,7 +24,7 @@ async function getBlogsData() {
     const res = await fetch("https://dummyjson.com/posts?limit=10&skip=10");
 
     if (res.ok) {
-      console.log(" Fetch all post succesfull");
+      console.log(" Fetch all post successful");
     }
 
     const data = await res.json();

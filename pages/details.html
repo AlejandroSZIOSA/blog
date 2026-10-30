@@ -12,15 +12,15 @@
       <button id="backBtn">Back</button>
     </header>
     <main>
-      <div id="messages"></div>
+      <div id="messages" class="message-outer-page__container"></div>
       <div id="content">
-        <h2>Details</h2>
+        <h1>Details</h1>
 
         <section class="blog-info__section">
           <div>
             <h2 id="postTitle"></h2>
             <p id="postDescription"></p>
-            <div>
+            <div class="edit-btns__container">
               <button id="editBtn">Edit</button>
               <button id="deleteBtn">Delete</button>
             </div>
@@ -39,7 +39,7 @@
                 <br />
                 <div
                   id="innerEditPostErrorMsg"
-                  class="innerPageErrorMsgDiv"
+                  class="message-inner-page__container"
                 ></div>
                 <button id="saveChangesBtn" type="submit">Save Changes</button>
               </fieldset>
@@ -56,9 +56,11 @@
               <br />
               <div
                 id="innerAddCommentErrorMsg"
-                class="innerPageErrorMsgDiv"
+                class="message-inner-page__container"
               ></div>
-              <button type="submit">Add</button>
+              <div class="add-btn__container">
+                <button type="submit">Add</button>
+              </div>
             </fieldset>
           </form>
         </section>

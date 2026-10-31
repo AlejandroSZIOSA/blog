@@ -44,7 +44,7 @@
 }
 
 .blog-info__section > div {
-  padding: 5px;
+  padding: 10px;
 }
 
 .edit-btns__container {
@@ -72,6 +72,8 @@
 .add-comment__section {
   background: chartreuse;
   width: stretch;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #commentForm textarea {
@@ -90,8 +92,34 @@
   justify-content: center;
 }
 
+.published-comments__section {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
+  .details-page__header {
+    justify-content: end;
+  }
+
+  .blog-info__section {
+    width: 75%;
+  }
+
   .add-comment__section {
+    width: 45%;
+  }
+
+  .published-comments__section {
     width: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-info__section {
+    width: 65%;
+  }
+
+  .add-comment__section {
+    width: 25%;
   }
 }

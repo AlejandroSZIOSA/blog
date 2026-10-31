@@ -18,6 +18,7 @@
 
 #blogList {
   list-style: circle;
+  padding-inline-start: 20px;
 }
 
 #blogList li {

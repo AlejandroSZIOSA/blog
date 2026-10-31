@@ -14,12 +14,13 @@ body {
 }
 
 header {
+  display: flex;
+  justify-content: center;
   position: sticky;
   top: 0;
   padding: 1rem;
   background-color: #222;
   color: #fff;
-  text-align: center;
   z-index: 1000;
 }
 
@@ -35,7 +36,7 @@ h1 {
 
 h2 {
   font-size: 1.2rem;
-  padding-top: 5px;
+  /* padding-top: 5px; */
   text-align: center;
 }
 
@@ -70,7 +71,7 @@ button {
   color: red;
 }
 
-/* Tablet and desktop */
+/* Tablet */
 
 @media (min-width: 768px) {
   header {
@@ -87,7 +88,7 @@ button {
 
   h2 {
     font-size: 1.5rem;
-    padding-top: 10px;
+    /* padding-top: 10px; */
   }
 
   h3 {

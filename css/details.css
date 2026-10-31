@@ -1,6 +1,5 @@
 #messages {
   display: block;
-  /* background-color: #f8d7da; */
   color: #721c24;
 }
 
@@ -9,11 +8,9 @@
 }
 
 #content {
-  /*  background-color: #f0f0f0; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 20px; */
   gap: 20px;
 }
 
@@ -29,16 +26,7 @@
   display: block;
 }
 
-/* #editPostSection.disabled {
-  display: none;
-} */
-
-/* #content section {
-  min-width: 98%;
-} */
-
 .blog-info__section {
-  /*   width: 95%; */
   border: 2px solid brown;
   background: yellow;
 }
